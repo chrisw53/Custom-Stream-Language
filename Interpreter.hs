@@ -9,10 +9,12 @@ main :: IO ()
 main = catch main' noParse
 
 main' = do (fileName : _ ) <- getArgs 
-           sourceText <- readFile fileName
-           putStrLn ("Parsing : " ++ sourceText)
-           let parsedProg = parseCalc (alexScanTokens sourceText)
-           putStrLn ("Parsed as " ++ (show parsedProg))
+           sourceFile <- readFile fileName
+           let sourceLines = (lines sourceFile)
+           interpretLines sourceLines
+
+interpretLines :: [String] -> IO ()
+interpretLines = mapM_ (putStrLn . (parseCalc (alexScanTokens sourceText)))
 
 noParse :: ErrorCall -> IO ()
 noParse e = do let err =  show e
