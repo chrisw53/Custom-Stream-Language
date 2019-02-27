@@ -33,7 +33,9 @@ data Token =
   TokenTimes       |
   TokenLParen      |
   TokenRParen      |
-  TokenString
+  TokenIf          |
+  TokenElse        |
+  TokenString String
   deriving (Eq,Show)
 
 }

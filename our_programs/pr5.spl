@@ -1,0 +1,4 @@
+var oneBefore = 0;
+var twoBefore = 0;
+
+forEach (ARGS) (function (x) (updateVar $twoBefore = $oneBefore; updateVar $oneBefore = f$x; return (f$x + $oneBefore + $twoBefore);));

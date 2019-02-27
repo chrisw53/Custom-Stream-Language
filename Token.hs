@@ -4160,7 +4160,7 @@ data Token =
   TokenTimes       |
   TokenLParen      |
   TokenRParen      |
-  TokenString
+  TokenString String
   deriving (Eq,Show)
 
 

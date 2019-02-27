@@ -1,0 +1,1 @@
+forEach (ARGS) (function (x) (return (copy (f$x););));
