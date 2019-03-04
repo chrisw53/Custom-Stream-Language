@@ -1,2 +1,0 @@
-var acc = 0;
-forEach (ARGS) (function (x) (return (increment ($acc) (f$x)););

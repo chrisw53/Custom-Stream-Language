@@ -1,0 +1,10 @@
+initVar oneBefore = 0;
+initVar twoBefore = 0;
+
+forEach (ARGS) {
+    function (fVar x) {
+        updateVar twoBefore = $oneBefore;
+        updateVar oneBefore = f$x;
+        return (f$x + $oneBefore + $twoBefore)
+    }
+};

@@ -1,0 +1,7 @@
+initVar acc = 0;
+forEach (ARGS) {
+    function (fVar x) {
+        updateVar acc = $acc + f$x;
+        return ($acc)
+    }
+};
