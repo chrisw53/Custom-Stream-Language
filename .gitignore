@@ -1,0 +1,9 @@
+TestInterpreter/
+*.o
+*.hi
+Grammar.hs
+Token.hs
+test_submission/
+automarker/
+test.spl
+test.txt
