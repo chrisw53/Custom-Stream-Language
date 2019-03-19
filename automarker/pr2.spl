@@ -1,5 +1,0 @@
-forEach (ARGS) {
-    function (fVar x) {
-        return (copy (f$x))
-    }
-};
