@@ -26,6 +26,11 @@ tokens :-
     \}          { tok (\p s -> TokenRBracket p) }
     \/          { tok (\p s -> TokenDivide p) }
     \,          { tok (\p s -> TokenComma p) }
+    \==         { tok (\p s -> TokenCompEq p) }
+    \<          { tok (\p s -> TokenCompLt p) }
+    \>          { tok (\p s -> TokenCompGt p) }
+    \<=         { tok (\p s -> TokenCompLtEq p) }
+    \>=         { tok (\p s -> TokenCompGtEq p) }
     if          { tok (\p s -> TokenIf p) }
     else        { tok (\p s -> TokenElse p) }
     updateVar   { tok (\p s -> TokenUpdateVar p) }
@@ -65,6 +70,11 @@ data Token =
     TokenFunction AlexPosn    |
     TokenComma AlexPosn       |
     TokenForEach AlexPosn     |
+    TokenCompEq AlexPosn      |
+    TokenCompGt AlexPosn      |
+    TokenCompLt AlexPosn      |
+    TokenCompGtEq AlexPosn    |
+    TokenCompLtEq AlexPosn    |
     TokenString AlexPosn String
     deriving (Eq,Show)
 

@@ -24,6 +24,11 @@ import Token
     'f$'        { TokenFVarCall _ }
     '$'		{ TokenVarCall _ }
     '=' 	{ TokenEq _ }
+    '=='	{ TokenCompEq _ }
+    '<'		{ TokenCompLt _ }
+    '>'		{ TokenCompGt _ }
+    '<='	{ TokenCompLtEq _ }
+    '>='	{ TokenCompGtEq _ }
     '+' 	{ TokenPlus _ }
     '-' 	{ TokenMinus _ }
     '*' 	{ TokenTimes _ }
@@ -49,8 +54,10 @@ VarList : fVar string				{ [$2] }
 
 Exp : var string '=' VarOps          		{ InitVar $2 $4 }
     | '(' Exp ')'                 		{ $2 }
-    | if Exp '{' Exp '}'	  		{ IfThen $2 $4 }
-    | if Exp '{' Exp '}' else '{' Exp '}'	{ IfElse $2 $4 $8 }
+    | if '(' Bools ')'
+    	'{' Exps '}'	  			{ IfThen $3 $6 }
+    | if '(' Bools ')'
+    	'{' Exps '}' else '{' Exps '}'		{ IfElse $3 $6 $10 }
     | updateVar string '=' VarOps		{ UpdateVar $2 $4 }
     | appendHead
     	'(' VarOps ')'
@@ -59,6 +66,11 @@ Exp : var string '=' VarOps          		{ InitVar $2 $4 }
     	'(' inputArgs ')'
     	'{' FunctionDT '}'			{ ForEach $6 }
 
+Bools: VarOps '==' VarOps			{ Equal $1 $3 }
+     | VarOps '>' VarOps			{ GreaterThan $1 $3 }
+     | VarOps '<' VarOps			{ LessThan $1 $3 }
+     | VarOps '>=' VarOps			{ GtEq $1 $3 }
+     | VarOps '<=' VarOps			{ LtEq $1 $3 }
 
 FunctionDT : function
         	'(' VarList ')'
@@ -69,11 +81,9 @@ FunctionDT : function
     		'(' VarList ')'
     		'{' return '(' VarOps ')' '}'	{ Function $3 [] $8}
 
-
 VarOps : 'f$' string                 		{ FuncVar $2 }
        | '$' string                  		{ CallVar $2 }
        | int					{ Int $1 }
-       | inputArgs				{ InputArgs }
        | VarOps '+' VarOps			{ Plus $1 $3 }
        | VarOps '-' VarOps                 	{ Minus $1 $3 }
        | VarOps '*' VarOps                 	{ Times $1 $3 }
@@ -94,15 +104,21 @@ data VarOps = FuncVar String
             | Divide VarOps VarOps
             | Negate VarOps
             | Copy VarOps
-            | InputArgs
 	    deriving Show
+
+data Bools = Equal VarOps VarOps
+	   | GreaterThan VarOps VarOps
+	   | LessThan VarOps VarOps
+	   | GtEq VarOps VarOps
+	   | LtEq VarOps VarOps
+	   deriving Show
 
 data FunctionDT = Function [String] [Exp] VarOps deriving Show
 
 data Exp = InitVar String VarOps
          | UpdateVar String VarOps
-         | IfElse Exp Exp Exp
-         | IfThen Exp Exp
+         | IfElse Bools [Exp] [Exp]
+         | IfThen Bools [Exp]
          | AppendHead VarOps
          | ForEach FunctionDT
          deriving Show

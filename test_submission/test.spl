@@ -1,0 +1,13 @@
+initVar test = 100;
+
+forEach (ARGS) {
+    function (fVar x) {
+        if (5 <= 5) {
+            updateVar test = 1;
+        } else {
+            updateVar test = 10;
+        };
+
+        return ($test)
+    }
+};
