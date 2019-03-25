@@ -92,3 +92,6 @@ handleBools (GtEq c1 c2) varMap fVarMap = reducedC1 >= reducedC2
 handleBools (LtEq c1 c2) varMap fVarMap = reducedC1 <= reducedC2
     where reducedC1 = head $ get1stElem (handleVarOps c1 varMap fVarMap)
           reducedC2 = head $ get1stElem (handleVarOps c2 varMap fVarMap)
+handleBools (NotEqual c1 c2) varMap fVarMap = reducedC1 /= reducedC2
+    where reducedC1 = head $ get1stElem (handleVarOps c1 varMap fVarMap)
+          reducedC2 = head $ get1stElem (handleVarOps c2 varMap fVarMap)

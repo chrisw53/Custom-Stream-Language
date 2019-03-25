@@ -31,6 +31,7 @@ tokens :-
     \>          { tok (\p s -> TokenCompGt p) }
     \<=         { tok (\p s -> TokenCompLtEq p) }
     \>=         { tok (\p s -> TokenCompGtEq p) }
+    \!=         { tok (\p s -> TokenCompNotEq p) }
     if          { tok (\p s -> TokenIf p) }
     else        { tok (\p s -> TokenElse p) }
     updateVar   { tok (\p s -> TokenUpdateVar p) }
@@ -75,6 +76,7 @@ data Token =
     TokenCompLt AlexPosn      |
     TokenCompGtEq AlexPosn    |
     TokenCompLtEq AlexPosn    |
+    TokenCompNotEq AlexPosn   |
     TokenString AlexPosn String
     deriving (Eq,Show)
 
@@ -105,4 +107,10 @@ tokenPosn (TokenReturn (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
 tokenPosn (TokenFunction (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
 tokenPosn (TokenComma (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
 tokenPosn (TokenForEach (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
+tokenPosn (TokenCompEq (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
+tokenPosn (TokenCompGt (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
+tokenPosn (TokenCompLt (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
+tokenPosn (TokenCompGtEq (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
+tokenPosn (TokenCompLtEq (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
+tokenPosn (TokenCompNotEq (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
 }

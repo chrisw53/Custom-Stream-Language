@@ -29,6 +29,7 @@ import Token
     '>'		{ TokenCompGt _ }
     '<='	{ TokenCompLtEq _ }
     '>='	{ TokenCompGtEq _ }
+    '!='	{ TokenCompNotEq _ }
     '+' 	{ TokenPlus _ }
     '-' 	{ TokenMinus _ }
     '*' 	{ TokenTimes _ }
@@ -71,6 +72,7 @@ Bools: VarOps '==' VarOps			{ Equal $1 $3 }
      | VarOps '<' VarOps			{ LessThan $1 $3 }
      | VarOps '>=' VarOps			{ GtEq $1 $3 }
      | VarOps '<=' VarOps			{ LtEq $1 $3 }
+     | VarOps '!=' VarOps			{ NotEqual $1 $3 }
 
 FunctionDT : function
         	'(' VarList ')'
@@ -111,6 +113,7 @@ data Bools = Equal VarOps VarOps
 	   | LessThan VarOps VarOps
 	   | GtEq VarOps VarOps
 	   | LtEq VarOps VarOps
+	   | NotEqual VarOps VarOps
 	   deriving Show
 
 data FunctionDT = Function [String] [Exp] VarOps deriving Show

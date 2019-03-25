@@ -4,6 +4,8 @@ TestInterpreter/
 Grammar.hs
 Token.hs
 test_submission/
+submission1/
+submission1.zip
 automarker/
 test.spl
 test.txt
