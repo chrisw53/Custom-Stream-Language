@@ -1,5 +1,5 @@
 initVar acc = 0;
-forEach (ARGS) {
+forEach {
     function (fVar x) {
         updateVar acc = $acc + f$x;
         return ($acc)

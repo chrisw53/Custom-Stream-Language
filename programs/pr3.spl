@@ -1,4 +1,4 @@
-forEach (ARGS) {
+forEach {
     function (fVar x, fVar y) {
         return (f$x + 3 * f$y)
     }

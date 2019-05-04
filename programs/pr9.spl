@@ -1,0 +1,10 @@
+initVar counter = 0;
+initVar acc = 0;
+
+forEach {
+    function (fVar x) {
+        updateVar counter = $counter + f$x;
+        updateVar acc = $acc + $counter;
+        return ($acc)
+    }
+};

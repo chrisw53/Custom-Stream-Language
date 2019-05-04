@@ -1,5 +1,5 @@
-forEach (ARGS) {
+forEach {
     function (fVar x) {
-        return (copy (f$x))
+        return (f$x & f$x)
     }
 };

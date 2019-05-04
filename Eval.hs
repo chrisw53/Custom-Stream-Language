@@ -9,6 +9,9 @@ get1stElem (x, _, _) = x
 get2ndElem (_, x, _) = x
 get3rdElem (_, _, x) = x
 
+appendToTail elem [] = [elem]
+appendToTail elem (x:xs) = x : appendToTail elem xs
+
 loopOnInstructions :: [Exp] -> [[Int]] -> Map String Int -> Map String Int -> ([[Int]], Map String Int, Map String Int)
 loopOnInstructions _ [[]] varMap fVarMap = ([], varMap, fVarMap)
 loopOnInstructions [] inputStream varMap fVarMap = (inputStream, varMap, fVarMap)
@@ -31,8 +34,6 @@ eval (IfThen cond exps) inputStream varMap fVarMap
 eval (IfElse cond thenExps elseExps) inputStream varMap fVarMap
     | handleBools cond varMap fVarMap = (inputStream, funcOpsHandler thenExps varMap fVarMap, fVarMap)
     | otherwise = (inputStream, funcOpsHandler elseExps varMap fVarMap, fVarMap)
-eval (AppendHead val) inputStream varMap fVarMap = ([reducedVal] : (init inputStream), varMap, fVarMap)
-    where reducedVal = head $ get1stElem (handleVarOps val varMap fVarMap)
 eval (ForEach func) inputStream varMap fVarMap = loopOnInputs func inputStream varMap fVarMap []
 
 funcOpsHandler :: [Exp] -> Map String Int -> Map String Int -> Map String Int
@@ -45,7 +46,12 @@ loopOnInputs (Function fVarList exps fOutVarOps) (i:is) varMap fVarMap output =
     loopOnInputs (Function fVarList exps fOutVarOps) is newVarMap newfVarMap (fOut : output)
     where newfVarMap = fVarInit (zip fVarList i) fVarMap
           newVarMap = funcOpsHandler exps varMap newfVarMap
-          fOut = get1stElem (handleVarOps fOutVarOps newVarMap newfVarMap)
+          fOut = get1stElem (handleVarOpsList fOutVarOps [] newVarMap newfVarMap)
+
+handleVarOpsList :: [VarOps] -> [Int] -> Map String Int -> Map String Int -> ([Int], Map String Int, Map String Int)
+handleVarOpsList (v:vs) output varMap fVarMap = handleVarOpsList vs newOutput varMap fVarMap
+    where newOutput = appendToTail ((get1stElem (handleVarOps v varMap fVarMap)) !! 0) output
+handleVarOpsList [] output varMap fVarMap = (output, varMap, fVarMap)
 
 fVarInit :: [(String, Int)] -> Map String Int -> Map String Int
 fVarInit [] fVarMap = fVarMap
@@ -67,8 +73,6 @@ handleVarOps (Times a b) varMap fVarMap = ([reducedA * reducedB], varMap, fVarMa
 handleVarOps (Divide a b) varMap fVarMap = ([reducedA `div` reducedB], varMap, fVarMap)
     where reducedA = head $ get1stElem (handleVarOps a varMap fVarMap)
           reducedB = head $ get1stElem (handleVarOps b varMap fVarMap)
-handleVarOps (Copy val) varMap fVarMap = ([reducedVal, reducedVal], varMap, fVarMap)
-    where reducedVal = head $ get1stElem (handleVarOps val varMap fVarMap)
 handleVarOps (CallVar a) varMap fVarMap = ([getVar a varMap], varMap, fVarMap)
 handleVarOps (FuncVar a) varMap fVarMap = ([getVar a fVarMap], varMap, fVarMap)
 

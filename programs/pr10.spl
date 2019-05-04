@@ -1,0 +1,12 @@
+initVar prevTwo = 0;
+initVar prevOne = 0;
+initVar currentVal = 0;
+
+forEach {
+    function (fVar x) {
+        updateVar prevTwo = $prevOne;
+        updateVar prevOne = $currentVal;
+        updateVar currentVal = f$x + $prevTwo;
+        return ($currentVal)
+    }
+};

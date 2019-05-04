@@ -32,11 +32,10 @@ tokens :-
     \<=         { tok (\p s -> TokenCompLtEq p) }
     \>=         { tok (\p s -> TokenCompGtEq p) }
     \!=         { tok (\p s -> TokenCompNotEq p) }
+    \&          { tok (\p s -> TokenAnd p) }
     if          { tok (\p s -> TokenIf p) }
     else        { tok (\p s -> TokenElse p) }
     updateVar   { tok (\p s -> TokenUpdateVar p) }
-    ARGS        { tok (\p s -> TokenInputArgs p) }
-    appendHead  { tok (\p s -> TokenAppendHead p) }
     return      { tok (\p s -> TokenReturn p) }
     function    { tok (\p s -> TokenFunction p) }
     forEach     { tok (\p s -> TokenForEach p) }
@@ -64,9 +63,7 @@ data Token =
     TokenLBracket AlexPosn    |
     TokenRBracket AlexPosn    |
     TokenUpdateVar AlexPosn   |
-    TokenInputArgs AlexPosn   |
     TokenDivide AlexPosn      |
-    TokenAppendHead AlexPosn  |
     TokenReturn AlexPosn      |
     TokenFunction AlexPosn    |
     TokenComma AlexPosn       |
@@ -77,6 +74,7 @@ data Token =
     TokenCompGtEq AlexPosn    |
     TokenCompLtEq AlexPosn    |
     TokenCompNotEq AlexPosn   |
+    TokenAnd AlexPosn         |
     TokenString AlexPosn String
     deriving (Eq,Show)
 
@@ -100,9 +98,7 @@ tokenPosn (TokenEndStmt (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
 tokenPosn (TokenLBracket (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
 tokenPosn (TokenRBracket (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
 tokenPosn (TokenUpdateVar (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
-tokenPosn (TokenInputArgs (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
 tokenPosn (TokenDivide (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
-tokenPosn (TokenAppendHead (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
 tokenPosn (TokenReturn (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
 tokenPosn (TokenFunction (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
 tokenPosn (TokenComma (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
@@ -113,4 +109,5 @@ tokenPosn (TokenCompLt (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
 tokenPosn (TokenCompGtEq (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
 tokenPosn (TokenCompLtEq (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
 tokenPosn (TokenCompNotEq (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
+tokenPosn (TokenAnd (AlexPn a l c)) = show(l) ++ ":" ++ show(c)
 }

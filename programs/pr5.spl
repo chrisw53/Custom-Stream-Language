@@ -2,7 +2,7 @@ initVar oneBefore = 0;
 initVar twoBefore = 0;
 initVar current = 0;
 
-forEach (ARGS) {
+forEach {
     function (fVar x) {
         updateVar current = f$x + $oneBefore + $twoBefore;
         updateVar twoBefore = $oneBefore;

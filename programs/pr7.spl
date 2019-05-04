@@ -1,0 +1,5 @@
+forEach {
+    function (fVar x, fVar y) {
+        return (f$x - f$y & f$x)
+    }
+};
