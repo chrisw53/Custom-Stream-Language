@@ -62,31 +62,7 @@ Tabs and spaces are not accounted for so the users are free to use however much 
 
 Since StreamScript operates solely on streams, while it is possible to just establish variables, any meaningful program must be created with a forEach loop in order to output a stream or streams based on the input stream.
 #### 1. Arithmetic
-All basic arithmetic and all combination of them are supported (plus, minus, divide, multiplication and negation). See below for example:
-##### Plus
-```
-1 + 2 = 3
-```
-##### Minus
-```
-2 - 1 = 1
-```
-##### Multiply
-```
-2 * 1 = 2
-```
-##### Divide
-```
-2 / 1 = 2
-```
-##### Negation
-```
--2 = -2
-```
-##### Complex Arithmetic
-```
-(2 + 2) * 3 = 12
-```
+All basic arithmetic and all combination of them are supported (plus, minus, divide, multiplication and negation). See appendix A1 for examples.
 
 #### 2. Initializing, Updating and Calling Variables
 To initialize a variable called helloWorld to zero, simply type:
@@ -133,7 +109,61 @@ forEach {
 
 The forEach loop function similar to map in haskell. The user will define a function where the user can freely name the element of each input stream as well as updating variables and making a return statement for a single or multiple values. Anything after the return statement will not be evaluated and will result in program error.
 
-Let's look at an example where there are two input streams and an outside counter that increments by 1 as each element of the input stream is looped over. Each element for the output stream is the sum of the elements of the two input streams plus the counter copied once. Like this:
+Let's look at an example where there are two input streams and an outside counter that increments by 1 as each element of the input stream is looped over. Each element for the output stream is the sum of the elements of the two input streams plus the counter copied once. See appendix A2 for details.
+
+#### 4. Comparisons (Booleans)
+Comparisons between different integer values is available as well in the context of if then and if else statements (see the section below). See appendix A3 for examples.
+
+#### 5. If Then and If Else Statement
+If else statement is also supported by StreamScript and they come in 2 flavors:
+
+##### If Then
+The format of the if then is as follow:
+```
+if (<Boolean>) {
+    [<initVar | updateVar | ifThen | ifElse>]
+};
+```
+
+##### If Else
+The format of the if else is as follow:
+```
+if (<Boolean>) {
+    [<initVar | updateVar | ifThen | ifElse>]
+} else {
+    [<initVar | updateVar | ifThen | ifElse>]
+}
+```
+
+See Appendix A4 for examples.
+## Appendix
+#### A. Simple Examples
+##### 1. Arithmetic
+###### Plus
+```
+1 + 2 = 3
+```
+###### Minus
+```
+2 - 1 = 1
+```
+###### Multiply
+```
+2 * 1 = 2
+```
+###### Divide
+```
+2 / 1 = 2
+```
+###### Negation
+```
+-2 = -2
+```
+###### Complex Arithmetic
+```
+(2 + 2) * 3 = 12
+```
+##### 2. forEach
 <table>
    	<tbody>
    		<tr>
@@ -200,57 +230,45 @@ Once the functional variables are established, we first create a temporary varia
 
 Note that we _**call functional variable with f$ instead of just $**_.
 
-#### 4. Comparisons (Booleans)
-Comparisons between different integer values is available as well in the context of if then and if else statements (see the section below):
-
+##### 3. Comparisons (Booleans)
 ```
 initVar one = 1;
 initVar two = 2;
 initVar oneCopy = 1;
 ```
 
-##### Equal To
+###### Equal To
 ```
 $one == $oneCopy
 ```
 
-##### Not Equal
+###### Not Equal
 ```
 $one != $two
 ```
 
-##### Larger Than
+###### Larger Than
 ```
 $two > $one
 ```
 
-##### Less Than
+###### Less Than
 ```
 $one < $two
 ```
 
-##### Larger Than or Equal To
+###### Larger Than or Equal To
 ```
 $one >= $oneCopy
 ```
 
-##### Less Than or Equal To
+###### Less Than or Equal To
 ```
 $one <= $oneCopy
 ```
 
-#### 5. If Then and If Else Statement
-If else statement is also supported by StreamScript and they come in 2 flavors:
-
-##### If Then
-The format of the if then is as follow:
-```
-if (<Boolean>) {
-    [<initVar | updateVar | ifThen | ifElse>]
-};
-```
-
-Example:
+##### 4. If And If Else Statement
+###### If Then
 ```
 initVar valOne = 34;
 initVar valTwo = 45;
@@ -263,17 +281,7 @@ if ($valOne < $valTwo) {
 
 At the end of the example the value of the variable dependency should be equal to 34, the same value as valOne because valOne is smaller than valTwo
 
-##### If Else
-The format of the if else is as follow:
-```
-if (<Boolean>) {
-    [<initVar | updateVar | ifThen | ifElse>]
-} else {
-    [<initVar | updateVar | ifThen | ifElse>]
-}
-```
-
-Example:
+###### If Else
 ```
 initVar valOne = 34;
 initVar valTwo = 45;
@@ -288,7 +296,7 @@ if ($valOne > $valTwo) {
 
 In this case the value of the variable dependency would be 45, the same as valTwo since the statement of valOne larger than valTwo is not true.
 
-##### Nested If Statement
+###### Nested If Statement
 You can also nest if statements like this:
 ```
 initVar valOne = 34;
@@ -304,8 +312,7 @@ if ($valOne < $valTwo) {
 
 In this case the value of the variable dependency would still be 0 since while valOne < valTwo is true, valOne < 0 isn't.
 
-## Appendix
-#### Problems and Solutions
+#### B. Problems and Solutions
 ##### 1. Prefixing
 ###### Problem:
 Take a sequence a1 a2 a3 a4 a5 . . . as an input and output the sequence 0 a1 a2 a3 . . ., that is, the sequence that is the same as the input sequence, but starting with a single 0 character.
@@ -732,7 +739,7 @@ forEach {
 };
 ```
 
-#### Syntax
+#### C. Syntax
 ```
 Exps ::= <Exp> ; <Exps>
        | <Exp> ;
